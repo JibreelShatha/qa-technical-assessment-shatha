@@ -1,0 +1,37 @@
+{
+  "name": "qa-technical-assessment-shatha",
+  "version": "1.0.0",
+  "description": "A modular, production-ready Cypress automation framework using TypeScript and Gherkin BDD, featuring Page Object Model architecture for registration and search workflows.",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:headed": "cypress run --headed",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "cy:run:smoke": "cypress run --env TAGS='@smoke'",
+    "cy:run:registration": "cypress run --spec 'cypress/e2e/features/registration.feature'",
+    "cy:run:search": "cypress run --spec 'cypress/e2e/features/search.feature'",
+    "test": "cypress run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "cypress",
+    "typescript",
+    "bdd",
+    "gherkin",
+    "cucumber",
+    "page-object-model",
+    "test-automation",
+    "qa"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "^15.13.0",
+    "dotenv": "^17.4.0",
+    "esbuild": "^0.27.5",
+    "typescript": "^5.9.3"
+  }
+}

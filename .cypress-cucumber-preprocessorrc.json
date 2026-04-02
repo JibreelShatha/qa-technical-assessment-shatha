@@ -1,0 +1,15 @@
+{
+  "stepDefinitions": [
+    "cypress/e2e/[filepath].steps.ts"
+  ],
+  "messages": {
+    "enabled": false
+  },
+  "html": {
+    "enabled": false
+  },
+  "json": {
+    "enabled": true,
+    "output": "cypress/reports/cucumber-report.json"
+  }
+}
