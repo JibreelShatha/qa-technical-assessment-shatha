@@ -24,10 +24,12 @@ A Cypress automation framework using TypeScript and Gherkin BDD, featuring Page 
 qa-technical-assessment-shatha/
 ├── cypress/
 │   ├── e2e/
-│   │   └── search/
-│   │       └── Tc1-searchGame/
-│   │           ├── search.feature         # Gherkin feature file
-│   │           └── search.steps.ts        # Step definitions
+│   │   ├── common.steps.ts               # Shared step definitions (e.g. login)
+│   │   ├── search/
+│   │   │   └── Tc1-searchGame/
+│   │   │       ├── search.feature         # Gherkin feature file
+│   │   │       └── search.steps.ts        # Step definitions
+│   │   └── signup/                        # (placeholder for signup tests)
 │   ├── pages/                             # Page Object Model
 │   │   ├── Locators/
 │   │   │   └── LoginPage.ts               # Element selectors
@@ -40,7 +42,8 @@ qa-technical-assessment-shatha/
 │   └── support/
 │       ├── commands.ts                    # Custom commands (cy.login, cy.waitForAppLoader)
 │       ├── e2e.ts                         # Support file entry point
-│       └── types.d.ts                     # TypeScript type declarations
+│       ├── types.d.ts                     # TypeScript type declarations
+│       └── viewports.ts                   # Device viewport presets
 ├── .cypress-cucumber-preprocessorrc.json
 ├── .env                                   # Local env vars (git-ignored)
 ├── .env.example
@@ -90,6 +93,70 @@ cy.waitForAppLoader();
 
 ---
 
+## Common Steps
+
+Shared Gherkin steps live in `cypress/e2e/common.steps.ts` and are available to every feature file. This avoids duplicating frequently used step definitions.
+
+| Step | Action |
+| ---- | ------ |
+| `Given Common Step: I am logged in` | Calls `cy.login()` — authenticates via the UI overlay using `.env` credentials |
+
+To add new common steps, append them to `common.steps.ts` and prefix the step text with **"Common Step:"** so it is immediately clear the definition is shared.
+
+---
+
+## Viewports
+
+The framework ships with five device presets defined in `cypress/support/viewports.ts`. The global `beforeEach` hook in `e2e.ts` reads the `device` environment variable and calls `cy.viewport()` before every test.
+
+| Key | Device | Width | Height |
+| --- | ------ | ----: | -----: |
+| `iphone` | iPhone 14 | 390 | 844 |
+| `pixel` | Google Pixel 8 | 412 | 915 |
+| `samsung` | Samsung Galaxy S24 | 360 | 780 |
+| `tablet` | iPad Air | 820 | 1180 |
+| `desktop` | Standard Monitor (default) | 1280 | 720 |
+
+> If no `device` is specified, tests default to **desktop** (1280 x 720), which also matches the `viewportWidth` / `viewportHeight` fallback in `cypress.config.ts`.
+
+### Running tests on a specific viewport
+
+Pass the `device` key via the `--env` flag:
+
+```bash
+# Desktop (default — no flag needed)
+npx cypress run
+
+# iPhone 14
+npx cypress run --env device=iphone
+
+# Google Pixel 8
+npx cypress run --env device=pixel
+
+# Samsung Galaxy S24
+npx cypress run --env device=samsung
+
+# iPad Air
+npx cypress run --env device=tablet
+
+# Combine with other env flags (e.g. Cucumber tags)
+npx cypress run --env device=tablet,TAGS='@smoke'
+
+# Interactive runner on a mobile viewport
+npx cypress open --env device=iphone
+```
+
+Using the npm scripts:
+
+```bash
+# npm run shorthand + viewport override
+npm run cy:run -- --env device=iphone
+npm run cy:run:chrome -- --env device=tablet
+npm run cy:run:headed -- --env device=samsung
+```
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -117,7 +184,7 @@ cp .env.example .env
 # Open Cypress Test Runner (interactive)
 npx cypress open
 
-# Run all tests headlessly
+# Run all tests headlessly (desktop viewport by default)
 npx cypress run
 
 # Run with headed browser
@@ -126,8 +193,33 @@ npx cypress run --headed
 # Run in Chrome
 npx cypress run --browser chrome
 
+# Run in Firefox
+npx cypress run --browser firefox
+
+# Run only @smoke-tagged scenarios
+npx cypress run --env TAGS='@smoke'
+
+# Run on a mobile viewport
+npx cypress run --env device=iphone
+
+# Run on tablet in headed Chrome
+npx cypress run --headed --browser chrome --env device=tablet
+
 # Type-check without running
 npx tsc --noEmit
+```
+
+Using npm scripts:
+
+```bash
+npm run cy:open            # Interactive runner
+npm run cy:run             # Headless run
+npm run cy:run:headed      # Headed run
+npm run cy:run:chrome      # Chrome
+npm run cy:run:firefox     # Firefox
+npm run cy:run:smoke       # @smoke tag only
+npm test                   # Alias for cy:run
+npm run typecheck          # TypeScript check
 ```
 
 ---

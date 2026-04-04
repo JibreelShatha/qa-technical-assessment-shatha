@@ -2,5 +2,5 @@
 Feature: Search Game
 
   Scenario: Search Game after login
-    Given I am logged in
+    Given Common Step: I am logged in
 

@@ -12,7 +12,7 @@ export default defineConfig({
     specPattern: ["**/*.feature"],
     supportFile: 'cypress/support/e2e.ts',
 
-    // Viewport
+    // Viewport default setting/fallback
     viewportWidth: 1280,
     viewportHeight: 720,
 
