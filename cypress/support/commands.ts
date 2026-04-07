@@ -9,24 +9,29 @@ Cypress.Commands.add(
     const resolvedPassword =
       password ?? Cypress.env('LOGIN_PASSWORD');
 
-    cy.request({
-      method: 'POST',
-      url: 'https://api.vssapi.com/player/api/v1/signin',
-      body: {
-        username: resolvedEmail,
-        password: resolvedPassword,
-        d_id: '',
+    cy.session(
+      [resolvedEmail, resolvedPassword],
+      () => {
+        cy.request({
+          method: 'POST',
+          url: 'https://api.vssapi.com/player/api/v1/signin',
+          body: {
+            username: resolvedEmail,
+            password: resolvedPassword,
+            d_id: '',
+          },
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+          const token = response.body.token;
+          cy.setCookie('jwt_auth', token);
+        });
       },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-
-      const token = response.body.token;
-
-      cy.setCookie('jwt_auth', token);
-
-      cy.visit('/');
-      cy.waitForAppLoader();
-    });
+      {
+        validate() {
+          cy.getCookie('jwt_auth').should('exist');
+        },
+      }
+    );
   }
 );
 

@@ -4,18 +4,18 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Log in via the UI login overlay modal.
-       * Opens /?overlay=login, fills credentials, and clicks Sign In.
-       * Falls back to LOGIN_EMAIL / LOGIN_PASSWORD env variables when
-       * no arguments are provided.
+       * Log in via API and cache the session using cy.session.
+       * Sets the jwt_auth cookie without visiting any page.
+       * Falls back to LOGIN_EMAIL / LOGIN_PASSWORD env variables
+       * when no arguments are provided.
        *
        * @param email    - User email address
        * @param password - User password
        *
        * @example
-       *   cy.login('user@example.com', 'P@ssw0rd');
-       *   // or rely on .env defaults:
        *   cy.login();
+       *   // or with explicit credentials:
+       *   cy.login('user@example.com', 'P@ssw0rd');
        */
       login(email?: string, password?: string): Chainable<void>;
 
