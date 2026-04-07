@@ -1,7 +1,3 @@
-import { LoginActions } from '@pages/actions/LoginActions';
-
-const loginActions = new LoginActions();
-
 Cypress.Commands.add(
   'login',
   (
@@ -13,11 +9,27 @@ Cypress.Commands.add(
     const resolvedPassword =
       password ?? Cypress.env('LOGIN_PASSWORD');
 
-    loginActions.visitLoginPage();
-    loginActions.loginWith(resolvedEmail, resolvedPassword);
+    cy.request({
+      method: 'POST',
+      url: 'https://api.vssapi.com/player/api/v1/signin',
+      body: {
+        username: resolvedEmail,
+        password: resolvedPassword,
+        d_id: '',
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+
+      const token = response.body.token;
+
+      cy.setCookie('jwt_auth', token);
+
+      cy.visit('/');
+      cy.waitForAppLoader();
+    });
   }
 );
 
 Cypress.Commands.add('waitForAppLoader', () => {
-  cy.get('img[alt="app loader"]', { timeout: 30000 }).should('not.exist');
+  cy.get('#preloader', { timeout: 30000 }).should('not.exist');
 });

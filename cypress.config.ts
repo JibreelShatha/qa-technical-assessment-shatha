@@ -8,7 +8,7 @@ dotenv.config();
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'https://stage.spinbet.com/en-nz',
+    baseUrl: 'https://www.vegastars5.com/',
     specPattern: ["**/*.feature"],
     supportFile: 'cypress/support/e2e.ts',
 
