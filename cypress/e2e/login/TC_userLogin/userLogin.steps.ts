@@ -3,7 +3,6 @@ import { HomeActions } from '@pages/actions/HomeActions';
 import { LoginActions } from '@pages/actions/LoginActions';
 import { HomeAssertions } from '@pages/assertions/HomeAssertions';
 import { LoginAssertions } from '@pages/assertions/LoginAssertions';
-import { use } from 'chai';
 
 const homeActions = new HomeActions();
 const homeAssertions = new HomeAssertions();

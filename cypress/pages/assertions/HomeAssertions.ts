@@ -4,22 +4,22 @@ const page = new HomePage();
 
 export class HomeAssertions {
 
-  verifyHomeIsReachable(): this {
+  verifyHomeIsReachable() {
     cy.url().should('eq', Cypress.config('baseUrl'));
     return this;
   }
 
-  verifyAccountDropdownIsVisible(): this {
+  verifyAccountDropdownIsVisible() {
     page.accountDropdownButton.should('be.visible');
     return this;
   }
 
-  verifyAccountDrawerIsOpen(): this {
+  verifyAccountDrawerIsOpen() {
     page.accountDrawer.should('be.visible');
     return this;
   }
 
-  verifyUsernameMatches(expectedUsername: string): this {
+  verifyUsernameMatches(expectedUsername: string) {
     page.accountUsername.should('be.visible').and('have.text', expectedUsername);
     return this;
   }
