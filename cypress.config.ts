@@ -28,6 +28,15 @@ export default defineConfig({
       openMode: 0,
     },
 
+    // Reporter
+    reporter: 'mochawesome',
+    reporterOptions: {
+      reportDir: 'cypress/reports/mochawesome',
+      overwrite: false,
+      html: false,
+      json: true,
+    },
+
     // Screenshots & Videos
     screenshotOnRunFailure: false,
     video: false,

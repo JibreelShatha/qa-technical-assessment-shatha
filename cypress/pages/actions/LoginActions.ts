@@ -1,4 +1,4 @@
-import { LoginPage } from '@pages/Locators/LoginPage';
+import { LoginPage } from '@pages/locators/LoginPage';
 
 const page = new LoginPage();
 

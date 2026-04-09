@@ -26,6 +26,14 @@ declare global {
        *   cy.waitForAppLoader();
        */
       waitForAppLoader(): Chainable<void>;
+
+            /**
+       * Wait for the game loader spinner to disappear from the DOM.
+       *
+       * @example
+       *   cy.gameLoader();
+       */
+      waitForGameLoader(): Chainable<void>;
     }
   }
 }

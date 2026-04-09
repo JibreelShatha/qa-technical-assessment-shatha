@@ -19,5 +19,9 @@ export class LoginPage {
   get passwordErrorMessage() {
     return cy.get('input[name="password"]').parents('.input-container').find('p.MuiFormHelperText-root.Mui-error');
   }
+
+  get loginOverlayDialog() {
+    return cy.get('[role="dialog"]');
+  }
   
 }

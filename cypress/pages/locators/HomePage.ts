@@ -5,11 +5,11 @@ export class HomePage {
   }
 
   get accountDrawer() {
-    return cy.get('.account-dropdown-header-popover');
+    return cy.get('[role="presentation"]');
   }
 
   get accountUsername() {
-    return this.accountDrawer.find('div').first().find('span').first();
+    return this.accountDrawer.find('span').first();
   }
 
 }

@@ -1,3 +1,5 @@
+import { SIGNIN_ENDPOINT } from '@support/constants';
+
 Cypress.Commands.add(
   'login',
   (
@@ -14,7 +16,7 @@ Cypress.Commands.add(
       () => {
         cy.request({
           method: 'POST',
-          url: 'https://api.vssapi.com/player/api/v1/signin',
+          url: SIGNIN_ENDPOINT,
           body: {
             username: resolvedEmail,
             password: resolvedPassword,
@@ -37,4 +39,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('waitForAppLoader', () => {
   cy.get('#preloader', { timeout: 30000 }).should('not.exist');
+});
+
+Cypress.Commands.add('waitForGameLoader', () => {
+  cy.get('[role="progressbar"]', { timeout: 30000 }).should('not.exist');
 });

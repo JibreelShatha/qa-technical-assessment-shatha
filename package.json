@@ -9,9 +9,10 @@
     "cy:run:chrome": "cypress run --browser chrome",
     "cy:run:firefox": "cypress run --browser firefox",
     "cy:run:smoke": "cypress run --env TAGS='@smoke'",
-    "cy:run:registration": "cypress run --spec 'cypress/e2e/features/registration.feature'",
-    "cy:run:search": "cypress run --spec 'cypress/e2e/features/search.feature'",
     "test": "cypress run",
+    "report:merge": "mochawesome-merge cypress/reports/mochawesome/*.json -o cypress/reports/mochawesome/merged-report.json",
+    "report:generate": "marge cypress/reports/mochawesome/merged-report.json -f report -o cypress/reports/mochawesome",
+    "report": "npm run report:merge && npm run report:generate",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -29,9 +30,12 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
-    "cypress": "^15.13.0",
+    "cypress": "^15.13.1",
     "dotenv": "^17.4.0",
     "esbuild": "^0.27.5",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
     "typescript": "^5.9.3"
   }
 }
